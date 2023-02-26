@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Board {
     private String [][] board;
+    private int size;
     public Board() {
         this.board = new String[3][3];
         for (int i = 0; i < 3; i++) {
@@ -10,9 +11,10 @@ public class Board {
             }
         }
     }
-    public void displayBoard() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+    public void displayBoard() { // default board with size 3
+        this.size=3;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 if (board[i][j] == null) {
                     System.out.print("_");
                 }
@@ -21,13 +23,35 @@ public class Board {
                 }
                 else{
                     System.out.print(board[i][j]);
-                    }
                 }
-            System.out.println();
             }
+            System.out.println();
+        }
+
+    }
+    public void displayBoard(int size) {
+        this.size = size;
+        initializeBoard(size);
 
         }
 
+
+    private void initializeBoard(int size){
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (board[i][j] == null) {
+                    System.out.print("_");
+                }
+                else if(board[i][j].isEmpty() ) {
+                    System.out.print("_");
+                }
+                else{
+                    System.out.print(board[i][j]);
+                }
+            }
+            System.out.println();
+        }
+    }
 
     public String getWinner(Board board) {
         //horizontal
@@ -102,10 +126,28 @@ public class Board {
     }
 
 
+    public String[][] getBoard() {
+        return board;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setBoard(String[][] board) {
+        this.board = board;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
     public static void main(String[] args) {
         Board board = new Board();
         board.playGame(board);
 
     }
+
+
 }
 
