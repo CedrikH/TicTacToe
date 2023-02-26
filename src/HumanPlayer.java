@@ -37,22 +37,58 @@ public class HumanPlayer extends Player{
     }
 
 
-    public void makeMove(Board board, Scanner scanner){ //Takes Player by symbol and scanner and pastes players symbol into desired place
+
+    private int getValidRow(Scanner scanner, int size) {
         while (true) {
             System.out.println("Which row");
-            int row = Integer.parseInt(scanner.nextLine()) - 1;
-            System.out.println("Which column");
-            int col = Integer.parseInt(scanner.nextLine()) - 1;
-            if (board.getTile(row,col).equals("o") || board.getTile(row,col).equals("x")){
-                System.out.println("Already occupied");
-                continue;
+            String input = scanner.nextLine();
+            //Preventing empty input
+            try {
+                if (input.isEmpty()) {
+                    System.out.println("Please enter your row");
+                    continue;
+                }
+                int row = Integer.parseInt(input) - 1;
+                if (row + 1 > size) {
+                    System.out.println("Number too big");
+                    continue;
+                }
+                return row;
             }
-
-            board.setTile(row,col,symbol); // ads players symbol to desired place
-
-
-
-            break;
+            catch (NumberFormatException e){
+                System.out.println("Not a valid input");
+            }
         }
     }
-}
+
+    private int getValidColumn(Scanner scanner, int size) {
+        while (true) {
+            System.out.println("Which column");
+            String input = scanner.nextLine();
+            try {
+                if (input.isEmpty()) {
+                    System.out.println("Please enter your column");
+                    continue;
+                }
+                int col = Integer.parseInt(input) - 1;
+                if (col + 1 > size) {
+                    System.out.println("Number too big");
+                    continue;
+                }
+                return col;
+            }
+            catch(NumberFormatException e){
+                System.out.println("Not a valid input");
+            }
+        }
+    }
+
+
+        public void makeMove(Board board, Scanner scanner){ //Takes Player by symbol and scanner and pastes players symbol into desired place
+            int size = board.getSize();
+            int row = getValidRow(scanner, size);
+            int col = getValidColumn(scanner, size);
+            board.setTile(row, col, symbol);
+        }
+    }
+
